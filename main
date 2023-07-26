@@ -1,0 +1,32 @@
+using System;
+using System.Data;
+
+public class ExpressionCalculator
+{
+    public static double CalculateExpression(string expression)
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("expression", typeof(string), expression);
+        DataRow row = dt.NewRow();
+        dt.Rows.Add(row);
+        return double.Parse((string)row["expression"]);
+    }
+
+    public static void Main(string[] args)
+    {
+        string expression1 = "2 + 3 * 5";
+        string expression2 = "(10 - 5) / 2";
+        string expression3 = "1 / 0";
+
+        Console.WriteLine(CalculateExpression(expression1)); // Output: 17
+        Console.WriteLine(CalculateExpression(expression2)); // Output: 2.5
+        try
+        {
+            Console.WriteLine(CalculateExpression(expression3)); // Output: Infinity, если нет ошибок
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error: " + ex.Message); // Output: Division by zero
+        }
+    }
+}
